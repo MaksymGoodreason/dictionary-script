@@ -39,14 +39,9 @@ try:
         sourced_dictionary_str = re.sub("\'", "\"", source_file.read()) 
         reversed_dictionary = reversing_dict(json.loads(sourced_dictionary_str))    # reverting dictionary
         # writing reverted dictionary to the file
-        try:
-            resulted_file = open(os.environ['REVDICTPATH'], 'w')
+        with open(os.environ['REVDICTPATH'], 'w') as resulted_file:
             resulted_file.write(json.dumps(reversed_dictionary))
             print("File with results is here: " + os.environ['REVDICTPATH'])
-        except:
-            print('File not found, we have wrote nothing')
-        finally:
-            resulted_file.close()  
         source_file.close() 
     else:
         print('File does not exist')
