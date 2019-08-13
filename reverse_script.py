@@ -1,21 +1,17 @@
-import os, sys
+import os
+import sys
 import re
 import json
 
-# DESCRIPTION
-# We are launching script from the command line 
-# Taking the name of the file with the dictionary (json) from the command
-# Reversing dictionary
-# Writing the result to the file (the name of the file present in system variable)
 
-# reverting dictionary (changing keys with values)
 def reversing_dict(dictionary):
+    """this function turns the dictionary inside out"""
     result_dict = {}
     buffer = []
     for key, value in dictionary.items():
-        if value not in result_dict.keys(): #adding new entry if it is a new key
+        if value not in result_dict: # adding new entry if it is a new key
             result_dict[value] = key
-        else:   #adding new value to the existed one to the same key
+        else:   # adding new value to the existed one to the same key
             buffer = list(result_dict[value])
             buffer.append(key)
             result_dict[value] = buffer
@@ -40,8 +36,8 @@ try:
     if os.path.exists(source_file_path):
         source_file = open(source_file_path, 'r')
         # substitute (') for  (") to allow json.loads not to provoke exeptions
-        soursed_dictionary_str = re.sub("\'", "\"", source_file.read()) 
-        reversed_dictionary = reversing_dict(json.loads(soursed_dictionary_str))    #reverting dictionary
+        sourced_dictionary_str = re.sub("\'", "\"", source_file.read()) 
+        reversed_dictionary = reversing_dict(json.loads(sourced_dictionary_str))    # reverting dictionary
         # writing reverted dictionary to the file
         try:
             resulted_file = open(os.environ['REVDICTPATH'], 'w')
@@ -55,10 +51,6 @@ try:
     else:
         print('File does not exist')
 except:
-    print("PLease enter name of the data file")
+    print("Please enter name of the data file")
 # deleting env variable (don't want to have it in system)
 del os.environ['REVDICTPATH']
-
-
-
-
